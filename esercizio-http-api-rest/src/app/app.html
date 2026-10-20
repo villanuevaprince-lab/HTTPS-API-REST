@@ -1,0 +1,44 @@
+<main class="contenitore">
+  <h1>HTTP e API REST: cose da fare</h1>
+  <p>Le attività arrivano dall'API pubblica JSONPlaceholder.</p>
+
+  <div class="utenti" aria-label="Seleziona utente">
+    <button type="button" (click)="carica(1)" [attr.aria-pressed]="utente() === 1">Utente 1</button>
+    <button type="button" (click)="carica(2)" [attr.aria-pressed]="utente() === 2">Utente 2</button>
+    <button type="button" (click)="carica(99)" [attr.aria-pressed]="utente() === 99">Utente 99</button>
+  </div>
+
+  @if (errore(); as messaggio) {
+    <p class="errore" role="alert">{{ messaggio }}</p>
+  }
+
+  @if (loading()) {
+    <p role="status">Caricamento in corso…</p>
+  } @else {
+    <p>Completate: {{ completate() }} su {{ todos().length }}</p>
+    <ul class="lista">
+      @for (todo of todos(); track todo.id) {
+        <li>
+          <span>{{ todo.title }} @if (todo.completed) { <strong>fatto</strong> }</span>
+          <button type="button" (click)="elimina(todo.id)"
+                  [disabled]="eliminazioneInCorso() !== null">
+            {{ eliminazioneInCorso() === todo.id ? 'Eliminazione…' : 'Elimina' }}
+          </button>
+        </li>
+      } @empty {
+        <li>Nessuna attività per questo utente.</li>
+      }
+    </ul>
+  }
+
+  <div class="inserimento">
+    <label for="nuova">Nuova attività</label>
+    <input #nuova id="nuova" placeholder="Es. Studiare HTTP" (keyup.enter)="aggiungi(nuova)">
+    <button type="button" (click)="aggiungi(nuova)">Invia</button>
+  </div>
+
+  @if (creato(); as risposta) {
+    <p>Risposta del server alla POST:</p>
+    <pre>{{ risposta | json }}</pre>
+  }
+</main>

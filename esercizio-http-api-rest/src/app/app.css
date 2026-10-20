@@ -1,0 +1,12 @@
+.contenitore { max-width: 780px; margin: 2rem auto; padding: 0 1rem; }
+.utenti, .inserimento { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0; }
+.inserimento input { flex: 1; min-width: 12rem; }
+.lista { list-style: none; padding: 0; }
+.lista li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid #ddd; }
+.errore { padding: .75rem; border: 1px solid #ad2222; color: #891919; background: #fff2f2; }
+strong { color: #146c36; }
+pre { overflow-x: auto; background: #eee; padding: 1rem; }
+button, input { font: inherit; padding: .5rem .75rem; }
+button { cursor: pointer; }
+button:disabled { cursor: wait; opacity: .6; }
+button[aria-pressed="true"] { background: #17478c; color: #fff; }
