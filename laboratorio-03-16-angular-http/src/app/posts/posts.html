@@ -4,6 +4,7 @@
     <input #numero type="number" class="form-control" value="1" min="1" aria-label="Numero del post">
   </div>
   <div class="col-auto"><button type="button" class="btn btn-primary" [disabled]="loading()" (click)="caricaUno(numero.value)">Carica un post</button></div>
+  <div class="col-auto"><button type="button" class="btn btn-outline-primary" [disabled]="loading()" (click)="caricaTutti()">Carica tutti</button></div>
 </div>
 
 @if (loading()) { <div class="spinner-border text-primary mb-3" role="status" aria-label="Caricamento"></div> }
@@ -13,3 +14,16 @@
   <h2 class="h5">Ultima risposta ricevuta (post n. {{ p.id }})</h2>
   <pre class="bg-body-tertiary p-3 rounded">{{ p | json }}</pre>
 }
+
+@if (posts().length > 0) {
+  <h2 class="h5">Tutti i post: {{ posts().length }}</h2>
+  <div class="list-group">
+    @for (p of posts(); track p.id) {
+      <div class="list-group-item">
+        <h3 class="h6 mb-1">{{ p.id }}. {{ p.title }}</h3>
+        <p class="mb-0 small text-body-secondary">{{ p.body }}</p>
+      </div>
+    }
+  </div>
+}
+<p class="small text-body-secondary mt-3">La POST di JSONPlaceholder risponde con un ID, ma non salva il post.</p>

@@ -35,6 +35,19 @@ export class Posts {
     });
   }
 
+  caricaTutti(): void {
+    this.posts.set([]);
+    this.paginazioneAttiva.set(false);
+    this.inizia();
+    this.postService.getPosts().subscribe({
+      next: (dati) => {
+        this.posts.set(dati);
+        this.loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => this.gestisciErrore(err),
+    });
+  }
+
   private inizia(): void {
     this.loading.set(true);
     this.errore.set(null);
