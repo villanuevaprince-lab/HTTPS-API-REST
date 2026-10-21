@@ -17,6 +17,8 @@ export class Posts {
   readonly posts = signal<Post[]>([]);
   readonly loading = signal(false);
   readonly errore = signal<string | null>(null);
+  readonly pagina = signal(1);
+  readonly paginazioneAttiva = signal(false);
 
   caricaUno(numero: string): void {
     const id = Number(numero);
@@ -55,6 +57,20 @@ export class Posts {
     this.postService.addPost(nuovo).subscribe({
       next: (risposta) => {
         this.post.set(risposta);
+        this.loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => this.gestisciErrore(err),
+    });
+  }
+
+  caricaPagina(numero: number): void {
+    if (this.loading() || numero < 1 || numero > 10) return;
+    this.inizia();
+    this.postService.getPagina(numero).subscribe({
+      next: (dati) => {
+        this.pagina.set(numero);
+        this.paginazioneAttiva.set(true);
+        this.posts.set(dati);
         this.loading.set(false);
       },
       error: (err: HttpErrorResponse) => this.gestisciErrore(err),

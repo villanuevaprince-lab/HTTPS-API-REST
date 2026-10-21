@@ -1,0 +1,22 @@
+<h1 class="h2">Pokédex</h1>
+<h2 class="h5">Tipi di Pokémon</h2>
+@if (loadingTipi()) { <p role="status">Caricamento dei tipi…</p> }
+@if (erroreTipi(); as messaggio) { <div class="alert alert-danger" role="alert">{{ messaggio }}</div> }
+<div class="d-flex flex-wrap gap-1 mb-4">
+  @for (tipo of tipi(); track tipo) { <span class="badge text-bg-secondary">{{ tipo }}</span> }
+</div>
+
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <input #ricerca class="form-control search-input" placeholder="Nome o numero (es. pikachu o 25)" aria-label="Nome o numero del Pokémon" (keyup.enter)="cerca(ricerca.value)">
+  <button type="button" class="btn btn-primary" [disabled]="loadingPokemon()" (click)="cerca(ricerca.value)">Cerca</button>
+</div>
+@if (loadingPokemon()) { <p role="status">Ricerca in corso…</p> }
+@if (errorePokemon(); as messaggio) { <div class="alert alert-danger" role="alert">{{ messaggio }}</div> }
+@if (pokemon(); as p) {
+  <div class="card pokemon-card"><div class="card-body">
+    <h2 class="card-title h4">{{ p.name }} (#{{ p.id }})</h2>
+    @if (p.sprites.front_default) { <img [src]="p.sprites.front_default" [alt]="'Immagine di ' + p.name" width="128" height="128"> }
+    <p class="mb-1">Altezza: {{ p.height / 10 }} m</p>
+    <p class="mb-0">Peso: {{ p.weight / 10 }} kg</p>
+  </div></div>
+}

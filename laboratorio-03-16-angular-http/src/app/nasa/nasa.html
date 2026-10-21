@@ -1,4 +1,10 @@
 <h1 class="h2">La foto astronomica del giorno</h1>
+<div class="d-flex flex-wrap align-items-end gap-2 mb-3">
+  <div><label for="data-apod" class="form-label">Scegli un'altra data</label>
+    <input #data id="data-apod" type="date" class="form-control"></div>
+  <button type="button" class="btn btn-outline-primary" [disabled]="loading() || !data.value" (click)="carica(data.value)">Mostra</button>
+  <button type="button" class="btn btn-primary" [disabled]="loading()" (click)="carica()">Oggi</button>
+</div>
 @if (loading()) { <div class="spinner-border text-primary" role="status" aria-label="Caricamento"></div> }
 @if (errore(); as messaggio) { <div class="alert alert-danger" role="alert">{{ messaggio }}</div> }
 @if (apod(); as a) {

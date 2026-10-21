@@ -18,12 +18,13 @@ export class Nasa implements OnInit {
     this.carica();
   }
 
-  carica(): void {
+  carica(data?: string): void {
     if (this.loading()) return;
     this.apod.set(null);
     this.errore.set(null);
     this.loading.set(true);
-    this.nasaService.getApod().subscribe({
+    const richiesta = data ? this.nasaService.getApodDel(data) : this.nasaService.getApod();
+    richiesta.subscribe({
       next: (dati) => {
         this.apod.set(dati);
         this.loading.set(false);

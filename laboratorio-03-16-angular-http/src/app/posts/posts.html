@@ -16,8 +16,17 @@
   <pre class="bg-body-tertiary p-3 rounded">{{ p | json }}</pre>
 }
 
+<div class="d-flex flex-wrap gap-2 align-items-center my-3">
+  <button type="button" class="btn btn-outline-secondary" (click)="caricaPagina(1)" [disabled]="loading()">Carica pagina 1</button>
+  @if (paginazioneAttiva()) {
+    <button type="button" class="btn btn-outline-secondary" (click)="caricaPagina(pagina() - 1)" [disabled]="loading() || pagina() === 1">Precedente</button>
+    <span>Pagina {{ pagina() }} di 10</span>
+    <button type="button" class="btn btn-outline-secondary" (click)="caricaPagina(pagina() + 1)" [disabled]="loading() || pagina() === 10">Successiva</button>
+  }
+</div>
+
 @if (posts().length > 0) {
-  <h2 class="h5">Tutti i post: {{ posts().length }}</h2>
+  <h2 class="h5">{{ paginazioneAttiva() ? 'Post della pagina' : 'Tutti i post' }}: {{ posts().length }}</h2>
   <div class="list-group">
     @for (p of posts(); track p.id) {
       <div class="list-group-item">
