@@ -1,0 +1,17 @@
+<h1 class="h2">La foto astronomica del giorno</h1>
+@if (loading()) { <div class="spinner-border text-primary" role="status" aria-label="Caricamento"></div> }
+@if (errore(); as messaggio) { <div class="alert alert-danger" role="alert">{{ messaggio }}</div> }
+@if (apod(); as a) {
+  <div class="card">
+    @if (a.media_type === 'image') {
+      <img [src]="a.url" [alt]="a.title" class="card-img-top apod-image">
+    } @else {
+      <div class="card-body"><a [href]="a.url" target="_blank" rel="noopener noreferrer">Il contenuto di questo giorno non è un'immagine: aprilo in una nuova scheda</a></div>
+    }
+    <div class="card-body">
+      <h2 class="card-title h5">{{ a.title }}</h2>
+      <p class="text-body-secondary">{{ a.date }} @if (a.copyright) { <span>, © {{ a.copyright }}</span> }</p>
+      <p class="card-text">{{ a.explanation }}</p>
+    </div>
+  </div>
+}
